@@ -67,6 +67,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Pages\Index.aspx" />
+    <Content Include="Pages\Crud.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -76,6 +78,20 @@
     </Compile>
     <Compile Include="MP.Master.designer.cs">
       <DependentUpon>MP.Master</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Index.aspx.cs">
+      <DependentUpon>Index.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Index.aspx.designer.cs">
+      <DependentUpon>Index.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Crud.aspx.cs">
+      <DependentUpon>Crud.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Crud.aspx.designer.cs">
+      <DependentUpon>Crud.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -90,7 +106,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Pages\" />
+    <ProjectReference Include="..\Modelo\Modelo.csproj">
+      <Project>{420e4525-f935-4c8d-8b92-a0e106cbd765}</Project>
+      <Name>Modelo</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

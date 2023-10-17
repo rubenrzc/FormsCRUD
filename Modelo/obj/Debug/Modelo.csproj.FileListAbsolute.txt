@@ -1,0 +1,7 @@
+C:\Users\USUARIO\source\repos\Forms\Modelo\bin\Debug\Modelo.dll.config
+C:\Users\USUARIO\source\repos\Forms\Modelo\bin\Debug\Modelo.dll
+C:\Users\USUARIO\source\repos\Forms\Modelo\bin\Debug\Modelo.pdb
+C:\Users\USUARIO\source\repos\Forms\Modelo\obj\Debug\Modelo.csproj.AssemblyReference.cache
+C:\Users\USUARIO\source\repos\Forms\Modelo\obj\Debug\Modelo.csproj.CoreCompileInputs.cache
+C:\Users\USUARIO\source\repos\Forms\Modelo\obj\Debug\Modelo.dll
+C:\Users\USUARIO\source\repos\Forms\Modelo\obj\Debug\Modelo.pdb
