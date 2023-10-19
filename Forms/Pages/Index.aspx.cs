@@ -16,9 +16,10 @@ namespace Forms.Pages
         readonly SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["conexion"].ConnectionString);
         protected void Page_Load(object sender, EventArgs e)
         {
-            CargarTabla();
+            CargarTablaEntity();
         }
 
+        // SIN LINQ
         void CargarTabla()
         {
             SqlCommand cmd = new SqlCommand("sp_load", con);
@@ -30,6 +31,12 @@ namespace Forms.Pages
             gvusuarios.DataSource = dt;
             gvusuarios.DataBind();
             con.Close();
+        }
+
+        void CargarTablaEntity()
+        {
+            gvusuarios.DataSource = ClsUsuario.BuscarUsuarios();
+            gvusuarios.DataBind();
         }
 
         protected void BtnRead_Click(object sender, EventArgs e)
@@ -49,7 +56,6 @@ namespace Forms.Pages
             id = selectedRow.Cells[1].Text;
             Response.Redirect("~/Pages/Crud.aspx?id=" + id + "&op=U");
         }
-
         protected void ButtonDelete_Click(object sender, EventArgs e)
         {
             string id;
@@ -66,13 +72,24 @@ namespace Forms.Pages
 
         protected void BtnId_Click(object sender, EventArgs e)
         {
-            int id = Int32.Parse(TxtId.Text);
-            int usuarioId = ClsLogin.IniciarSesion(id);
-
-            if(usuarioId == 0)
+            if (TxtId.Text != "")
             {
-                Response.Write("<script>alert(" + id + ")</script>");
+                int id = int.Parse(TxtId.Text);
+                string idString = "";
+                int usuarioId = ClsLogin.IniciarSesion(id);
+
+                if (usuarioId == 0)
+                {
+                    idString = "El id: " + id + " no existe en la BBDD";
+                    Response.Write("<script>alert('" + idString + "')</script>");
+                }
+                else
+                {
+                    Session["usuario"] = usuarioId;
+                    Response.Redirect("~/Pages/EntityTuto/InicioId.aspx");
+                }
             }
+
         }
     }
 }

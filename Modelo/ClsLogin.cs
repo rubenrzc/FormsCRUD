@@ -8,7 +8,7 @@ namespace Modelo
 {
     public class ClsLogin
     {
-        public static int IniciarSesion( int id)
+        public static int IniciarSesion(int id)
         {
             int usuarioId = 0;
             EntidadesDataContext context = new EntidadesDataContext();

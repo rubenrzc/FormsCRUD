@@ -42,7 +42,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ClsCiudad.cs" />
     <Compile Include="ClsLogin.cs" />
+    <Compile Include="ClsUsuario.cs" />
     <Compile Include="Entidades.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

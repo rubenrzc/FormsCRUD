@@ -30,6 +30,12 @@ namespace Modelo
 		
     #region Definiciones de métodos de extensibilidad
     partial void OnCreated();
+    partial void InsertCiudades(Ciudades instance);
+    partial void UpdateCiudades(Ciudades instance);
+    partial void DeleteCiudades(Ciudades instance);
+    partial void InsertUsuarios(Usuarios instance);
+    partial void UpdateUsuarios(Usuarios instance);
+    partial void DeleteUsuarios(Usuarios instance);
     #endregion
 		
 		public EntidadesDataContext() : 
@@ -62,6 +68,14 @@ namespace Modelo
 			OnCreated();
 		}
 		
+		public System.Data.Linq.Table<Ciudades> Ciudades
+		{
+			get
+			{
+				return this.GetTable<Ciudades>();
+			}
+		}
+		
 		public System.Data.Linq.Table<Usuarios> Usuarios
 		{
 			get
@@ -71,9 +85,125 @@ namespace Modelo
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Usuarios")]
-	public partial class Usuarios
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Ciudades")]
+	public partial class Ciudades : INotifyPropertyChanging, INotifyPropertyChanged
 	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _Id;
+		
+		private string _Nombre;
+		
+		private EntitySet<Usuarios> _Usuarios;
+		
+    #region Definiciones de métodos de extensibilidad
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdChanging(int value);
+    partial void OnIdChanged();
+    partial void OnNombreChanging(string value);
+    partial void OnNombreChanged();
+    #endregion
+		
+		public Ciudades()
+		{
+			this._Usuarios = new EntitySet<Usuarios>(new Action<Usuarios>(this.attach_Usuarios), new Action<Usuarios>(this.detach_Usuarios));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		public int Id
+		{
+			get
+			{
+				return this._Id;
+			}
+			set
+			{
+				if ((this._Id != value))
+				{
+					this.OnIdChanging(value);
+					this.SendPropertyChanging();
+					this._Id = value;
+					this.SendPropertyChanged("Id");
+					this.OnIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Nombre", DbType="VarChar(255)")]
+		public string Nombre
+		{
+			get
+			{
+				return this._Nombre;
+			}
+			set
+			{
+				if ((this._Nombre != value))
+				{
+					this.OnNombreChanging(value);
+					this.SendPropertyChanging();
+					this._Nombre = value;
+					this.SendPropertyChanged("Nombre");
+					this.OnNombreChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Ciudades_Usuarios", Storage="_Usuarios", ThisKey="Id", OtherKey="Ciudad")]
+		public EntitySet<Usuarios> Usuarios
+		{
+			get
+			{
+				return this._Usuarios;
+			}
+			set
+			{
+				this._Usuarios.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_Usuarios(Usuarios entity)
+		{
+			this.SendPropertyChanging();
+			entity.Ciudades = this;
+		}
+		
+		private void detach_Usuarios(Usuarios entity)
+		{
+			this.SendPropertyChanging();
+			entity.Ciudades = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Usuarios")]
+	public partial class Usuarios : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
 		
 		private int _Id_Usuario;
 		
@@ -85,11 +215,35 @@ namespace Modelo
 		
 		private System.Nullable<System.DateTime> _Fecha_Nacimiento;
 		
+		private System.Nullable<int> _Ciudad;
+		
+		private EntityRef<Ciudades> _Ciudades;
+		
+    #region Definiciones de métodos de extensibilidad
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnId_UsuarioChanging(int value);
+    partial void OnId_UsuarioChanged();
+    partial void OnNombreChanging(string value);
+    partial void OnNombreChanged();
+    partial void OnEdadChanging(System.Nullable<int> value);
+    partial void OnEdadChanged();
+    partial void OnCorreoChanging(string value);
+    partial void OnCorreoChanged();
+    partial void OnFecha_NacimientoChanging(System.Nullable<System.DateTime> value);
+    partial void OnFecha_NacimientoChanged();
+    partial void OnCiudadChanging(System.Nullable<int> value);
+    partial void OnCiudadChanged();
+    #endregion
+		
 		public Usuarios()
 		{
+			this._Ciudades = default(EntityRef<Ciudades>);
+			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id_Usuario", AutoSync=AutoSync.Always, DbType="Int NOT NULL IDENTITY", IsDbGenerated=true)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id_Usuario", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
 		public int Id_Usuario
 		{
 			get
@@ -100,7 +254,11 @@ namespace Modelo
 			{
 				if ((this._Id_Usuario != value))
 				{
+					this.OnId_UsuarioChanging(value);
+					this.SendPropertyChanging();
 					this._Id_Usuario = value;
+					this.SendPropertyChanged("Id_Usuario");
+					this.OnId_UsuarioChanged();
 				}
 			}
 		}
@@ -116,7 +274,11 @@ namespace Modelo
 			{
 				if ((this._Nombre != value))
 				{
+					this.OnNombreChanging(value);
+					this.SendPropertyChanging();
 					this._Nombre = value;
+					this.SendPropertyChanged("Nombre");
+					this.OnNombreChanged();
 				}
 			}
 		}
@@ -132,7 +294,11 @@ namespace Modelo
 			{
 				if ((this._Edad != value))
 				{
+					this.OnEdadChanging(value);
+					this.SendPropertyChanging();
 					this._Edad = value;
+					this.SendPropertyChanged("Edad");
+					this.OnEdadChanged();
 				}
 			}
 		}
@@ -148,7 +314,11 @@ namespace Modelo
 			{
 				if ((this._Correo != value))
 				{
+					this.OnCorreoChanging(value);
+					this.SendPropertyChanging();
 					this._Correo = value;
+					this.SendPropertyChanged("Correo");
+					this.OnCorreoChanged();
 				}
 			}
 		}
@@ -164,8 +334,90 @@ namespace Modelo
 			{
 				if ((this._Fecha_Nacimiento != value))
 				{
+					this.OnFecha_NacimientoChanging(value);
+					this.SendPropertyChanging();
 					this._Fecha_Nacimiento = value;
+					this.SendPropertyChanged("Fecha_Nacimiento");
+					this.OnFecha_NacimientoChanged();
 				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Ciudad", DbType="Int")]
+		public System.Nullable<int> Ciudad
+		{
+			get
+			{
+				return this._Ciudad;
+			}
+			set
+			{
+				if ((this._Ciudad != value))
+				{
+					if (this._Ciudades.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnCiudadChanging(value);
+					this.SendPropertyChanging();
+					this._Ciudad = value;
+					this.SendPropertyChanged("Ciudad");
+					this.OnCiudadChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Ciudades_Usuarios", Storage="_Ciudades", ThisKey="Ciudad", OtherKey="Id", IsForeignKey=true)]
+		public Ciudades Ciudades
+		{
+			get
+			{
+				return this._Ciudades.Entity;
+			}
+			set
+			{
+				Ciudades previousValue = this._Ciudades.Entity;
+				if (((previousValue != value) 
+							|| (this._Ciudades.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Ciudades.Entity = null;
+						previousValue.Usuarios.Remove(this);
+					}
+					this._Ciudades.Entity = value;
+					if ((value != null))
+					{
+						value.Usuarios.Add(this);
+						this._Ciudad = value.Id;
+					}
+					else
+					{
+						this._Ciudad = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("Ciudades");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
 		}
 	}
